@@ -1,7 +1,7 @@
 var connection = require('../utils/db');
 
 var lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream('../8193.23andme.6530')
+    input: require('fs').createReadStream('./8193.23andme.6530')
 });
 connection.getConnection().then(db => {
     lineReader.on('line',  (line) => {
