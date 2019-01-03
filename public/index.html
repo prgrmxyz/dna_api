@@ -3,39 +3,49 @@
 <head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-
+    <style>
+        .table-wrapper-scroll-y {
+            display: block;
+            max-height: 350px;
+            overflow-y: auto;
+            width: 65%;
+        }
+    </style>
     <script>
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
         function load() {
             fetch('/api/data').then(value => {
                 value.json().then(value1 => {
                     var body = '';
                     value1.forEach(data => {
-                        body += '<tr><td>' + data['_id'] + '</td><td>' + data['count'] + '</td></tr>'
+                        body += '<tr><td>' + data['_id'] + '</td><td>' + numberWithCommas(data['count']) + '</td></tr>'
                     });
                     var table = `
-                        <table class="table .table-striped" style="width: 65%">
-                            <thead>
-                                <tr><th>Chromosome</th> <th>Variants</th></tr>
-                            </thead>
-                            <tbody>
-                                ${body}
-                            </tbody>
-                        </table>
-                    `;
+                         <table class="table .table-striped" >
+                             <thead>
+                                 <tr><th>Chromosome</th> <th>Variants</th></tr>
+                             </thead>
+                             <tbody>
+                                 ${body}
+                             </tbody>
+                         </table>
+                     `;
                     document.getElementById('response').innerHTML = table;
                 });
             });
         }
     </script>
 </head>
-
 <body onload="load()" class="container">
+<br/>
 <h1> Response: from the api</h1>
 <code>curl -X GET http://localhost:3000/api/data</code>
 <br/>
 <br/>
-<div id="response">
+<div id="response" class="table-wrapper-scroll-y">
     <img src="/loader.gif"/>
 </div>
 </body>

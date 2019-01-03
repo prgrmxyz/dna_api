@@ -13,6 +13,9 @@ router.get('/', function (request, response, next) {
                     _id: "$chromosome",
                     count: {$sum: 1}
                 }
+            },
+            {
+                $sort:{_id: 1}
             }
         ]).toArray();
 
